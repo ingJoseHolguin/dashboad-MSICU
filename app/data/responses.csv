@@ -1,0 +1,32 @@
+Nombre,Edad,Género,Ocupación,Nivel_de_estudios,Respuesta1,Respuesta2,Respuesta3,Respuesta4,Respuesta5,Respuesta6,Respuesta7,Respuesta8,Respuesta9,Respuesta10,SUS_Score
+Pepe Holguin,30,Femenino,Estudiante,Licenciatura,1,2,3,4,2,5,4,3,2,1,40
+José González,55,Masculino,Jubilado,Educación Básica y Media,2,2,4,5,3,1,5,4,4,2,42
+Carlos Perez,33,Masculino,Independiente,Licenciatura,1,1,2,2,4,5,3,5,3,2,35
+Miguel Díaz,28,Femenino,Estudiante,Maestría,3,3,4,1,2,4,5,4,2,1,38
+Laura Martínez,49,Masculino,Empleado sector Publico,Educación Básica y Media,2,3,5,3,4,1,5,2,3,4,37
+Ana López,41,Femenino,Empresario,Licenciatura,1,4,2,3,5,3,4,1,2,5,40
+Sofia Sánchez,26,Femenino,Empleado sector Publico,Sin estudios,5,2,1,1,4,3,4,3,2,3,30
+María Rodríguez,35,Masculino,Estudiante,Maestría,2,2,5,3,5,4,1,5,4,3,43
+Roberto Fernández,47,Femenino,Empleado sector privado,Licenciatura,1,5,3,4,4,1,2,2,3,4,37
+Carlos Gómez,62,Femenino,Jubilado,Educación Básica y Media,2,1,4,4,5,2,4,3,1,2,38
+Jorge Morales,39,Femenino,Independiente,Licenciatura,5,4,1,3,2,5,4,1,3,2,36
+Ricardo Díaz,29,Masculino,Empleado sector privado,Licenciatura,1,3,4,4,2,5,1,2,5,2,37
+Claudia Rivera,55,Masculino,Empresario,Doctorado,4,5,2,1,5,1,3,5,5,3,41
+Sofia Martínez,38,Masculino,Sin Ocupación,Educación Básica y Media,5,1,3,4,4,2,1,5,4,1,36
+Marcelo Sánchez,34,Masculino,Independiente,Licenciatura,2,4,4,5,1,3,4,2,3,5,39
+Juan Pérez,44,Femenino,Empleado sector Publico,Licenciatura,3,5,1,3,4,4,4,3,2,2,38
+Lucía López,52,Masculino,Empleado sector privado,Maestría,4,1,2,5,2,5,3,4,1,3,38
+Esteban García,50,Femenino,Estudiante,Educación Básica y Media,1,5,4,2,3,1,4,2,5,5,38
+Raquel González,23,Masculino,Empleado sector privado,Sin estudios,4,4,3,5,1,5,1,2,4,3,37
+Carla Rodríguez,31,Masculino,Independiente,Licenciatura,1,2,2,3,4,5,1,4,2,3,33
+Marco Torres,41,Femenino,Empleado sector Publico,Licenciatura,5,1,4,4,1,3,4,5,2,1,36
+David Morales,40,Femenino,Jubilado,Maestría,5,5,1,2,4,1,2,4,5,2,37
+Eva Hernández,57,Masculino,Sin Ocupación,Licenciatura,2,5,3,3,1,4,1,4,4,5,38
+Martín Pérez,25,Masculino,Empresario,Licenciatura,5,3,3,1,4,4,4,2,3,3,38
+Ricardo Sánchez,34,Femenino,Independiente,Doctorado,2,4,5,2,4,1,3,4,3,2,35
+Santiago Ruiz,45,Femenino,Empleado sector privado,Maestría,5,5,3,4,2,1,4,5,4,3,42
+Lina Morales,36,Femenino,Empresario,Licenciatura,3,5,4,3,4,3,2,5,2,4,39
+Daniel López,56,Femenino,Empleado sector Publico,Educación Básica y Media,3,3,2,4,1,4,3,4,4,5,38
+Oscar Martínez,27,Femenino,Empleado sector privado,Licenciatura,1,5,3,2,5,2,5,3,4,1,36
+Gabriela Fernández,29,Femenino,Independiente,Maestría,2,1,4,4,4,3,2,5,3,4,37
+Carlos Sánchez,41,Otro,Empresario,Licenciatura,3,5,1,3,4,5,4,2,5,3,39
