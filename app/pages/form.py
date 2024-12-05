@@ -13,8 +13,6 @@ if not os.path.exists(FILE_PATH):
     ])
     df.to_csv(FILE_PATH, index=False)
 
-
-
 st.title("Formulario de Evaluación SUS")
 st.write("Aquí los usuarios pueden responder las preguntas.")
 
@@ -81,7 +79,7 @@ if submitted:
         "Edad": age,
         "Género": gender,
         "Ocupación": occupation,
-        "nivel de estudios": education,
+        "Nivel_de_estudios": education,
         **{f"Respuesta{i+1}": responses[i] for i in range(len(responses))},
         "SUS_Score": sus_score,
     }

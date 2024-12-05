@@ -61,11 +61,6 @@ if os.path.exists(FILE_PATH):
         ))
         st.plotly_chart(fig_gauge, use_container_width=True)
 
-        # Crear gráfico Boxplot para las edades
-        fig_box = px.box(df, y="Edad", title="Distribución de las Edades de los Participantes",
-                         labels={"Edad": "Edad"})
-        st.plotly_chart(fig_box, use_container_width=True)
-
         fig_age = px.histogram(df, x="Edad", nbins=10, title="Distribución de las Edades",
                         labels={"Edad": "Edad"})
         st.plotly_chart(fig_age)
@@ -109,6 +104,48 @@ if os.path.exists(FILE_PATH):
             "Respuesta9", "Respuesta10"
         ]
 
+        if all(col in df.columns for col in preguntas_cols):
+            # Calcular el promedio de las respuestas por pregunta
+            promedio_respuestas = df[preguntas_cols].mean()
+
+            # Crear etiquetas del eje X como Q1, Q2, Q3, ...
+            etiquetas_x = [f"Q{i+1}" for i in range(len(preguntas_cols))]
+
+            # Crear el gráfico de barras
+            fig_barras_promedios = px.bar(
+                x=etiquetas_x,  # Etiquetas abreviadas en el eje X
+                y=promedio_respuestas,  # Promedios de las respuestas
+                labels={"x": "Pregunta", "y": "Promedio de Respuestas"},
+                title="Promedio de Respuestas por Pregunta",
+                text_auto=True  # Mostrar valores sobre las barras
+            )
+            fig_barras_promedios.update_layout(
+                yaxis=dict(range=[0, 5])  # Establecer el rango del eje Y entre 0 y 5
+            )
+
+            # Mostrar el gráfico
+            st.plotly_chart(fig_barras_promedios, use_container_width=True)
+
+            legend_text = """
+            - Q1: Creo que me gustaría utilizar este sistema con frecuencia  
+            - Q2: Encontré el sistema innecesariamente complejo  
+            - Q3: Pensé que el sistema era fácil de usar  
+            - Q4: Creo que necesitaría el apoyo de un técnico para poder utilizar este sistema  
+            - Q5: Encontré que las diversas funciones de este sistema estaban bien integradas  
+            - Q6: Pensé que había demasiada inconsistencia en este sistema  
+            - Q7: Me imagino que la mayoría de la gente aprendería a utilizar este sistema muy rápidamente  
+            - Q8: Encontré el sistema muy complicado de usar  
+            - Q9: Me sentí muy seguro usando el sistema  
+            - Q10: Necesitaba aprender muchas cosas antes de empezar con este sistema  
+            """
+
+            # Mostrar las frases como leyenda
+            st.markdown(legend_text)
+
+        else:
+            st.error("No se encuentran todas las columnas de respuestas.")
+            
+
         # Asegurarse de que las columnas estén presentes en el DataFrame
         if all(col in df.columns for col in preguntas_cols):
             # Convertir las respuestas a tipo numérico, si no lo están ya
@@ -120,7 +157,7 @@ if os.path.exists(FILE_PATH):
                     df, 
                     y=preguntas_cols[i],  # Seleccionamos la columna de la respuesta
                     title=f"Distribución de las respuestas a: {pregunta}",
-                    labels={preguntas_cols[i]: pregunta}
+                    #labels={preguntas_cols[i]: pregunta}
                 )
                 st.plotly_chart(fig_respuesta)
         else:
