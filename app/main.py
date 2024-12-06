@@ -1,4 +1,34 @@
 import streamlit as st
+import subprocess
+import sys
+
+# Instalar pandas y plotly si no están instalados
+try:
+    import pandas as pd
+except ImportError:
+    print("Pandas no está instalado. Instalando...")
+    subprocess.check_call([sys.executable, "-m", "pip", "install", "pandas"])
+    import pandas as pd
+
+try:
+    import plotly.express as px
+except ImportError:
+    print("Plotly Express no está instalado. Instalando...")
+    subprocess.check_call([sys.executable, "-m", "pip", "install", "plotly"])
+    import plotly.express as px
+
+try:
+    import plotly.graph_objects as go
+except ImportError:
+    print("Plotly Graph Objects no está instalado. Instalando...")
+    subprocess.check_call([sys.executable, "-m", "pip", "install", "plotly"])
+    import plotly.graph_objects as go
+
+# Import os, que es parte de la biblioteca estándar de Python, por lo que no requiere instalación
+import os
+
+fig = px.line(df, x="x", y="y", title="Ejemplo de gráfico con Plotly Express")
+fig.show()
 
 st.set_page_config(page_title="Dashboard MSICU", layout="wide")
 import streamlit as st
