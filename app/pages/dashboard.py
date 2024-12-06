@@ -6,8 +6,15 @@ import plotly.graph_objects as go
 # Ruta al archivo CSV
 FILE_PATH = "./app/data/responses.csv"
 
-st.title("Resultados de Evaluación SUS")
-st.write("Aquí se mostrarán los resultados de las evaluaciones.")
+st.set_page_config(
+    page_title="Resultados SUS",
+    page_icon="📊",
+    layout="wide"
+)
+
+st.title("📊 Resultados de Evaluación SUS")
+st.markdown("**Explora los resultados de las encuestas SUS**")
+
 
 preguntas = [
     "Creo que me gustaría utilizar este sistema con frecuencia",
@@ -26,29 +33,24 @@ if os.path.exists(FILE_PATH):
     df = pd.read_csv(FILE_PATH)
 
     if "SUS_Score" in df.columns and "Edad" in df.columns:
-        # Llenar valores nulos con 0 o cualquier valor predeterminado
+
+        # Llenar valores nulos
         df["SUS_Score"].fillna(0, inplace=True)
+        promedio_sus = df["SUS_Score"].mean()
 
-        # Mostrar la cantidad de encuestas contestadas
-        num_encuestas = len(df)
-        st.markdown(
-            f"""
-            <div style="display: flex; justify-content: center; align-items: center; height: 100%; text-align: center;">
-                <div>
-                    <h3>Encuestas Contestadas</h3>
-                    <h1>{num_encuestas}</h1>
-                </div>
-            </div>
-            """, unsafe_allow_html=True
-        )
+        # División en columnas
+        col1, col2, col3 = st.columns(3)
 
-        # Promedio del puntaje SUS
-        avg_sus_score = df["SUS_Score"].mean()
+        # Métricas principales
+        col1.metric("Encuestas Contestadas", len(df))
+        col2.metric("Puntaje SUS Promedio", f"{promedio_sus:.2f}")
+        col3.metric("Máximo Puntaje SUS", f"{df['SUS_Score'].max()}")
+
 
         # Crear gráfico de velocímetro del puntaje SUS
         fig_gauge = go.Figure(go.Indicator(
             mode="gauge+number+delta",
-            value=avg_sus_score,
+            value=promedio_sus,
             title={'text': "Promedio del Puntaje SUS"},
             gauge={'axis': {'range': [0, 100]},
                    'bar': {'color': "rgba(255, 255, 255, 0.6)"},
@@ -59,44 +61,84 @@ if os.path.exists(FILE_PATH):
                    ]},
             number={'suffix': " "}
         ))
+        # Añadir leyendas para los rangos
+        fig_gauge.add_annotation(
+            x=0.25, y=-(0.1),
+            text="Inaceptable (0 - 50)",
+            showarrow=False,
+            font=dict(size=12, color="black"),
+            align="center"
+        )
+
+        fig_gauge.add_annotation(
+            x=0.5, y=-(0.1),
+            text="Marginal (50 - 70)",
+            showarrow=False,
+            font=dict(size=12, color="black"),
+            align="center"
+        )
+
+        fig_gauge.add_annotation(
+            x=0.75, y=-(0.1),
+            text="Aceptable (70 - 100)",
+            showarrow=False,
+            font=dict(size=12, color="black"),
+            align="center"
+        )
+
+        # Mostrar el gráfico en Streamlit
         st.plotly_chart(fig_gauge, use_container_width=True)
 
-        fig_age = px.histogram(df, x="Edad", nbins=10, title="Distribución de las Edades",
-                        labels={"Edad": "Edad"})
-        st.plotly_chart(fig_age)
 
-        fig_pie_gender = px.pie(
-            df,
-            names="Género",  # Nombre de la columna que contiene los géneros
-            title="Distribución de Géneros",
-            labels={"Género": "Género"},  # Etiqueta para el gráfico
-        )
-        st.plotly_chart(fig_pie_gender)
 
-        # OCUPACION Y ESTUDIOS
-        fig_occupation = px.bar(
-        df,
-        x="Ocupación",
-        title="Distribución de Ocupación",
-        category_orders={
-            "Ocupación": ["Sin Ocupacion", "Estudiante", "Empleado sector privado", 
-                          "Empleado sector Publico", "Independiente", "Empresario", "Jubilado"]
-        },
-        labels={"Ocupación": "Ocupación", "count": "Número de participantes"}
-        )
-        st.plotly_chart(fig_occupation)
+        # Crear dos columnas
+        col1, col2 = st.columns(2)
 
-        fig_studies = px.bar(
-        df,
-        x="Nivel_de_estudios",
-        title="Distribución de Nivel de Estudios",
-        category_orders={
-            "Nivel_de_Estudios": ["Sin estudios", "Educacion Basica y Media", "Licenciatura", 
-                                  "Maestría", "Doctorado"]
-        },
-        labels={"Nivel_de_Estudios": "Nivel de Estudios", "count": "Número de participantes"}
-        )
-        st.plotly_chart(fig_studies)
+        # Columna 1: Gráfico de distribución de edades
+        with col1:
+            fig_age = px.histogram(df, x="Edad", nbins=10, title="Distribución de las Edades", labels={"Edad": "Edad"})
+            st.plotly_chart(fig_age, use_container_width=True)
+
+        # Columna 2: Gráfico de distribución de géneros
+        with col2:
+            fig_pie_gender = px.pie(
+                df,
+                names="Género",  # Nombre de la columna que contiene los géneros
+                title="Distribución de Géneros",
+                labels={"Género": "Género"}  # Etiqueta para el gráfico
+            )
+            st.plotly_chart(fig_pie_gender, use_container_width=True)
+
+        # Crear dos columnas para Ocupación y Nivel de Estudios
+        col1, col2 = st.columns(2)
+
+        # Columna 1: Gráfico de distribución de ocupaciones
+        with col1:
+            fig_occupation = px.bar(
+                df,
+                x="Ocupación",
+                title="Distribución de Ocupación",
+                category_orders={
+                    "Ocupación": ["Sin Ocupación", "Estudiante", "Empleado sector privado",
+                                "Empleado sector público", "Independiente", "Empresario", "Jubilado"]
+                },
+                labels={"Ocupación": "Ocupación", "count": "Número de participantes"}
+            )
+            st.plotly_chart(fig_occupation, use_container_width=True)
+
+        # Columna 2: Gráfico de distribución de nivel de estudios
+        with col2:
+            fig_studies = px.bar(
+                df,
+                x="Nivel_de_estudios",
+                title="Distribución de Nivel de Estudios",
+                category_orders={
+                    "Nivel_de_estudios": ["Sin estudios", "Educación Básica y Media", "Licenciatura",
+                                        "Maestría", "Doctorado"]
+                },
+                labels={"Nivel_de_estudios": "Nivel de Estudios", "count": "Número de participantes"}
+            )
+            st.plotly_chart(fig_studies, use_container_width=True)
 
         preguntas_cols = [
             "Respuesta1", "Respuesta2", "Respuesta3", "Respuesta4", 
@@ -146,7 +188,6 @@ if os.path.exists(FILE_PATH):
             st.error("No se encuentran todas las columnas de respuestas.")
             
 
-        # Asegurarse de que las columnas estén presentes en el DataFrame
         if all(col in df.columns for col in preguntas_cols):
             # Convertir las respuestas a tipo numérico, si no lo están ya
             df[preguntas_cols] = df[preguntas_cols].apply(pd.to_numeric, errors='coerce')
@@ -157,12 +198,18 @@ if os.path.exists(FILE_PATH):
                     df, 
                     y=preguntas_cols[i],  # Seleccionamos la columna de la respuesta
                     title=f"Distribución de las respuestas a: {pregunta}",
-                    #labels={preguntas_cols[i]: pregunta}
+                    labels={preguntas_cols[i]: pregunta}
+                )
+                # Ajustar la escala del eje Y
+                fig_respuesta.update_layout(
+                    yaxis=dict(
+                        range=[0, 5]  # Establece el rango de la escala de 0 a 5
+                    )
                 )
                 st.plotly_chart(fig_respuesta)
         else:
             st.error("No se encuentran todas las columnas de respuestas.")
-               
+                    
     else:
         st.error("El archivo no contiene las columnas 'SUS_Score' o 'Edad'.")
 else:
